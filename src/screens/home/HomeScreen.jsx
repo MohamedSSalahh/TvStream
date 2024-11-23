@@ -1,15 +1,19 @@
 import { useEffect } from "react";
 import { scrollToTop } from "../../utilities/scrollToTop";
 import { Banner, Genre } from "../../components";
-
-
+import StreamDevices from "../../components/home/StreamDevices/StreamDevices";
+import CommonQuestions from "../../components/home/CommonQuestions/CommonQuestions";
+import Subscription from "../../components/home/Subscription/Subscription";
 
 const HomeScreen = () => {
   useEffect(() => scrollToTop(), []);
   return (
     <div className="pg-home">
-     <Banner/>
-   <Genre/>
+      <Banner />
+      <Genre />
+      <StreamDevices />
+      <CommonQuestions />
+<Subscription/>
     </div>
   );
 };
