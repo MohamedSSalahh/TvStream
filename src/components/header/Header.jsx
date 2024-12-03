@@ -1,5 +1,3 @@
-import React, { useEffect, useRef } from "react";
-
 import routeConstants from "../../constant/routeConstants";
 import { Container } from "../../styles/global/default";
 import {
@@ -8,36 +6,39 @@ import {
   HeaderWrapper,
   NavWrapper,
 } from "./Header.styles";
-
 import { Images } from "../../assets/images";
 import { Icons } from "../../assets/icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useHeaderBackground from "../../hooks/hasHeaderBackground";
 import {
   closeSidebar,
-  opensidebar,
+  openSidebar,
   selectIsSidebarOpen,
 } from "../../redux/slices/sidebarSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+
 const Header = () => {
   const location = useLocation();
   const scrollThreshold = 0;
   const hasBackground = useHeaderBackground(scrollThreshold);
-  const headerStyle = hasBackground ? "bg-black86 sm-header" : "bg-transparent";
+  const headerStyle = hasBackground ? "bg-black06 sm-header" : "bg-transparent";
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector(selectIsSidebarOpen);
   const navRef = useRef(null);
+
   const handleNavClose = (event) => {
     if (
       navRef?.current &&
       !navRef.current.contains(event.target) &&
-      !isDescendantof(event.target, "sidebar-open-btn")
+      !isDescendantOf(event.target, "sidebar-open-btn")
     ) {
       dispatch(closeSidebar());
     }
   };
 
-  const isDescendantof = (element, className) => {
+  const isDescendantOf = (element, className) => {
     let currentElement = element;
     while (
       currentElement !== null &&
@@ -54,24 +55,30 @@ const Header = () => {
       document.body.removeEventListener("click", handleNavClose);
     };
   }, []);
+
+  // auto close on link click
   const handleNavLinkClick = () => {
     dispatch(closeSidebar());
   };
+
   return (
-    <HeaderWrapper className={`flex item-center ${headerStyle}`}>
+    <HeaderWrapper className={`flex items-center ${headerStyle}`}>
       <Container className="w-full">
         <div className="header-content flex items-center justify-between">
           <BrandWrapper to={routeConstants.HOME}>
-            <img src={Images.Logo} alt="" />
+            <img src={Images.Logo} alt="site logo" />
           </BrandWrapper>
           <NavWrapper
+            ref={navRef}
             className={`flex items-center justify-center ${
               isSidebarOpen ? "show" : ""
-            }`}>
+            }`}
+          >
             <button
               type="button"
               className="sidebar-close-btn"
-              onClick={() => dispatch(closeSidebar())}>
+              onClick={() => dispatch(closeSidebar())}
+            >
               <img src={Icons.Close} alt="" />
             </button>
             <ul className="nav-list flex items-center justify-center bg-black06">
@@ -81,7 +88,8 @@ const Header = () => {
                   to={routeConstants.HOME}
                   className={`nav-link inline-flex items-center justify-center text-center ${
                     location.pathname === routeConstants.HOME ? "active" : ""
-                  }`}>
+                  }`}
+                >
                   Home
                 </Link>
               </li>
@@ -90,8 +98,9 @@ const Header = () => {
                   onClick={handleNavLinkClick}
                   to={routeConstants.SHOWS}
                   className={`nav-link inline-flex items-center justify-center text-center ${
-                    location.pathname === routeConstants.SHOWS ? "active" : ""
-                  }`}>
+                    location.pathname === routeConstants.SHOWS || location.pathname.startsWith(routeConstants.SHOWS) ? "active" : ""
+                  }`}
+                >
                   Shows
                 </Link>
               </li>
@@ -101,7 +110,8 @@ const Header = () => {
                   to="/support"
                   className={`nav-link inline-flex items-center justify-center text-center ${
                     location.pathname === "/support" ? "active" : ""
-                  }`}>
+                  }`}
+                >
                   Support
                 </Link>
               </li>
@@ -111,7 +121,8 @@ const Header = () => {
                   to="/subscription"
                   className={`nav-link inline-flex items-center justify-center text-center ${
                     location.pathname === "/subscription" ? "active" : ""
-                  }`}>
+                  }`}
+                >
                   Subscription
                 </Link>
               </li>
@@ -120,22 +131,19 @@ const Header = () => {
           <HeaderIconsWrapper className="flex items-center">
             <Link
               to="/search"
-              className="icon-link flex items-center justify-center">
+              className="icon-link flex items-center justify-center"
+            >
               <img src={Icons.Search} alt="" />
             </Link>
-            <Link
-              to="/search"
-              className="icon-link flex items-center justify-center">
+            <Link to="/" className="icon-link flex items-center justify-center">
               <img src={Icons.Bell} alt="" />
             </Link>
             <button
               type="button"
-              className="icon-link flex items-center justify-center sidebar-open-btn">
-              <img
-                src={Icons.Menu}
-                alt=""
-                onClick={() => dispatch(opensidebar())}
-              />
+              className="icon-link flex items-center justify-center sidebar-open-btn"
+              onClick={() => dispatch(openSidebar())}
+            >
+              <img src={Icons.Menu} alt="" />
             </button>
           </HeaderIconsWrapper>
         </div>

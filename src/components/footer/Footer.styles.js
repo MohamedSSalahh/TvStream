@@ -2,18 +2,18 @@ import styled from "styled-components";
 import { media, theme } from "../../styles/theme/theme";
 
 export const FooterWrapper = styled.footer`
-  padding-top: 100px;
+  padding-top: 60px;
 
   ${media.xl`
-        padding-top: 100px;
+        padding-top: 40px;
     `}
 
   ${media.lg`
-        padding-top: 80px;
+        padding-top: 30px;
     `}
 
     ${media.sm`
-        padding-top: 60px;
+        padding-top: 20px;
     `}
 
     .footer-top {

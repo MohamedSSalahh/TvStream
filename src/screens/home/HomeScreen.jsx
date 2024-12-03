@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from "react"
 import { scrollToTop } from "../../utilities/scrollToTop";
-import { Banner, Genre } from "../../components";
+import { Banner, FreeTrial, Genre } from "../../components";
 import StreamDevices from "../../components/home/StreamDevices/StreamDevices";
 import CommonQuestions from "../../components/home/CommonQuestions/CommonQuestions";
 import Subscription from "../../components/home/Subscription/Subscription";
@@ -13,9 +13,10 @@ const HomeScreen = () => {
       <Genre />
       <StreamDevices />
       <CommonQuestions />
-<Subscription/>
+      <Subscription />
+      <FreeTrial />
     </div>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

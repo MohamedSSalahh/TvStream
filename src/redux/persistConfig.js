@@ -1,13 +1,9 @@
-import { version } from "react"
-import storage from "redux-persist/lib/storage"
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage, // storage engine (localstorage, sessionstorage etc.)
+};
 
-
-
-const persistConfig ={
-key:"root",
-version:1,
-storage,
-}
-
-export default persistConfig
+export default persistConfig;
